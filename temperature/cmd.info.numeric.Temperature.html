@@ -1,0 +1,47 @@
+<div class="cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="default" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#" title="Date de valeur : #valueDate#<br/>Date de collecte : #collectDate#" >
+    <div class="title #hide_name#">
+        <span class="cmdName">#name_display#</span>
+    </div>
+    <div class="content-sm">
+        <div class="#history#" data-cmd_id="#id#">
+            <div style="border-radius: 50%;left:0;bottom:0;right:0;position:relative;width: 45px;height:45px;margin:8% 0;">
+                <div class="temp-grad" style="background: linear-gradient(90deg, #efa80f, #ff8841);width: 45px;height:45px;border-radius:50%;font-weight:bold;font-size:12px;color: #fff;text-align: center;">
+                    <div style="padding-top:30%;">#state#&deg;</div>
+                    <div style="font-size:10px;margin-top:4px;"><i class="#tendance#"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cmdStats #hide_history#" style="margin-top:2px;">
+        <span title='Min' class='tooltips' style="margin-right:2px;">#minHistoryValue#</span>|<span title='Moyenne' class='tooltips' style="margin:0 2px;">#averageHistoryValue#</span>|<span title='Max' class='tooltips' style="margin-left:2px;">#maxHistoryValue#</span>
+    </div>
+
+    <script>
+
+        tempGradCss = {
+            'freezing': '270deg, #00a4b4, #32004b',
+            'cold': '270deg, #00a4b4, #087883',
+            'gettingcolder': '90deg, #01a4b4, #03bf87',
+            'colder': '90deg, #00a4b4, #88b04b',
+            'cooler': '270deg, #9aba2f, #1b9aa7',
+            'mild': '90deg, #9aba2f, #ffae00',
+            'milder': '90deg, #88b04b, #e5c21f',
+            'gettingcooler': '90deg, #88b04b, #ff8841',
+            'warm': '90deg, #efa80f, #ff8841',
+            'warmer': '90deg, #ff8841, #ec6615',
+            'hot': '90deg, #ff8841, #ec6615',
+            'hotter': '90deg, #ff8841, #e60e4b',
+            'veryhot': '90deg, #fd7641, #637ff6',
+            'extremehot': '90deg, #de2c52, #637ff6',
+        };
+
+        tempGradKey = '';
+
+        jeedom.cmd.update['#id#'] = function(_options){
+            tempGradKey = ( _options.display_value < 0 ? 'freezing' : ( _options.display_value < 5 ? 'cold' : ( _options.display_value < 7 ? 'gettingcolder' : ( _options.display_value < 10 ? 'colder' : ( _options.display_value < 12 ? 'cooler' : ( _options.display_value < 15 ? 'mild' : ( _options.display_value < 18 ? 'milder' : ( _options.display_value < 20 ? 'gettingcooler' : ( _options.display_value < 23 ? 'warm' : ( _options.display_value < 25 ? 'warmer' : ( _options.display_value < 27 ? 'hot' : ( _options.display_value < 30 ? 'hotter' : ( _options.display_value < 35 ? 'hotter' : ( _options.display_value < 40 ? 'veryhot' : 'extremehot' ) ) ) ) ) ) ) ) ) ) ) ) ) );
+            $('.cmd[data-cmd_id=#id#]').attr('title','Date de valeur : '+_options.valueDate+'<br/>Date de collecte : '+_options.collectDate)
+            $('.cmd[data-cmd_id=#id#] .temp-grad').css("background", 'linear-gradient('+tempGradCss[tempGradKey]+')');
+        }
+        jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+    </script>
+</div>
