@@ -1,0 +1,32 @@
+<div class="cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="default" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#" title="Date de valeur : #valueDate#<br/>Date de collecte : #collectDate#" >
+    <div class="title #hide_name#">
+        <span class="cmdName">#name_display#</span>
+    </div>
+    <div class="content-sm">
+        <div class="#history#" data-cmd_id="#id#">
+            <div class="humidity-svg">
+                <svg id="humidy-svg-#id#" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 352 532" height="45" width="32">
+                    <linearGradient id="humidity-grad" gradientUnits="userSpaceOnUse" x1="0" y1="100%" x2="0" y2="0%">
+                        <stop offset="0%" style="stop-color:rgba(255,255,255,0.9)"/>
+                        <stop class="svg-offset-break" offset="80%" style="stop-color:rgba(255,255,255,0.9)"/>
+                        <stop class="svg-offset-break" offset="90%" style="stop-color:transparent"/>
+                        <stop offset="100%" style="stop-color:transparent"/>
+                    </linearGradient>
+                    <path style="fill:url(#humidity-grad);paint-order:stroke;" stroke="var(--el-defaultColor)" stroke-width="20" d="M205.22 22.09c-7.94-28.78-49.44-30.12-58.44 0C100.01 179.85 0 222.72 0 333.91 0 432.35 78.72 512 176 512s176-79.65 176-178.09c0-111.75-99.79-153.34-146.78-311.82zM176 448c-61.75 0-112-50.25-112-112 0-8.84 7.16-16 16-16s16 7.16 16 16c0 44.11 35.89 80 80 80 8.84 0 16 7.16 16 16s-7.16 16-16 16z"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="cmdStats #hide_history#" style="margin-top:2px;">
+        <span title='Min' class='tooltips' style="margin-right:2px;">#minHistoryValue#</span>|<span title='Moyenne' class='tooltips' style="margin:0 2px;">#averageHistoryValue#</span>|<span title='Max' class='tooltips' style="margin-left:2px;">#maxHistoryValue#</span>
+    </div>
+
+    <script>
+        jeedom.cmd.update['#id#'] = function(_options){
+            $('.cmd[data-cmd_id=#id#]').find('.svg-offset-break').each(function (){
+                $(this).attr('offset', _options.display_value+'%');
+            });
+        }
+        jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+    </script>
+</div>
